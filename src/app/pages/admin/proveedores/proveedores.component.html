@@ -1,0 +1,168 @@
+<div nz-row nzGutter="25">
+    <!-- skeleton -->
+    <ng-template #loadingSkeleton>
+      <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+        [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    </ng-template>
+    <!-- skeleton -->
+
+    <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]="modalTitle"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()"
+  >
+    <ng-template #modalTitle>Proveedor</ng-template>
+
+    <ng-template #modalContent>
+      <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Campo requerido.">
+              <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">rfc:</nz-form-label>
+              <input formControlName="rfc" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input >
+            </nz-form-control>
+          </nz-form-item>
+         <nz-form-item>
+           <nz-form-control nzErrorTip="Campo requerido.">
+             <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Razón social:</nz-form-label>
+             <input formControlName="razonSocial" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+           </nz-form-control>
+         </nz-form-item>
+       
+         <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Dirección:</nz-form-label>
+            <input formControlName="direccion" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Teléfono 1:</nz-form-label>
+            <input formControlName="telefono_1" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Teléfono 2:</nz-form-label>
+            <input formControlName="telefono_2" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Cuenta:</nz-form-label>
+            <input formControlName="cuenta" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+          </nz-form-control>
+        </nz-form-item>
+        
+         <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Banco:</nz-form-label>
+            <nz-select formControlName="banco" class="basic-select" name="banco">
+              <nz-option *ngFor="let banco of bancos" [nzLabel]="banco.nombre" [nzValue]="banco.id">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+       </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+      <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="handleOk()" [nzLoading]="btnLoading">Guardar</button>
+    </ng-template>
+  </nz-modal>
+
+    <div nz-col nzXs="24" class="mb-[25px]">
+        <!-- New Contact -->
+        <div class="flex items-center justify-center md:justify-end">
+         <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showNew()" nz-button >
+           <i class="text-[12px]" nz-icon nzType="plus"></i>
+           <span class="m-0">Crear proveedor</span>
+         </button>
+       </div>
+         <!-- end: New Contact -->
+      </div>
+
+    <div nz-col nzXs="24" class="mb-[25px]">
+        <ng-container *ngIf="showContent; else loadingSkeleton">
+          <div
+            class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+            <div
+              class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Proveedores</h4>
+            </div>
+            <div class="p-[25px]">
+              <div>
+                <div class="p-[25px]">
+                        <div class="w-full overflow-x-auto">
+                            <nz-table #basicTable 
+                            nzShowSizeChanger
+                            [nzData]="data"
+                            >
+                              <thead>
+                                <tr>
+                                  
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">No.</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Razon social</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Direccion</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Telefono</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Telefono 2</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Rfc</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Banco</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Cuenta</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Activo</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              <tr class="group" *ngFor="let item of basicTable.data">
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.noProveedor }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.razonSocial }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.direccion }}</td> 
+  
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono_1 }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono_2 }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.rfc }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.banco }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.cuenta }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                                  <nz-checkbox-wrapper class="flex flex-col w-full capitalize basic-checkbox text-theme-gray dark:text-white/60 gap-[5px] mb-[15px]" (nzOnChange)="log($event, item.id)">
+                                    <label class=" m-0 text-dark dark:text-white/[.87]" nz-checkbox nzValue="1" [ngModel]="item.activo"></label>
+                                  </nz-checkbox-wrapper>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                                  <div class="flex items-center gap-[10px]">
+                                    <a class="text-light-extra text-18" nz-dropdown nzPlacement="bottomRight" nzTrigger="click"
+                                        [nzDropdownMenu]="projectListSetting2">
+                                        <span nz-icon nzType="more" nzTheme="outline"></span>
+                                      </a>
+                                      <nz-dropdown-menu #projectListSetting2="nzDropdownMenu">
+                                        <ul
+                                          class="block bg-white dark:bg-[#1b1e2b] shadow-regular dark:shadow-[0_5px_30px_rgba(1,4,19,.60)] rounded-4 capitalize"
+                                          nz-menu nzSelectable>
+          
+                                       
+                                        <li  (click)="EditarProveedor(item)"
+                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
+                                        nz-menu-item>
+                                          <i nz-icon nzType="edit" theme="outline"></i>
+                                          <span class="m-l-10">Editar</span>
+                                        </li>
+                                        </ul>
+                                      </nz-dropdown-menu>
+                                  </div>
+                                 </td>
+                                </tr>
+                              </tbody>
+                            </nz-table>
+                          </div>
+                      </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    
+</div>

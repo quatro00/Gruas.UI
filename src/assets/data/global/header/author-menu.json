@@ -1,0 +1,14 @@
+{
+  "appAuthorMenu": [
+    {
+      "label": "Perfil",
+      "icon": "user",
+      "url": "javascript:void(0);"
+    },
+    {
+      "label": "Ajustes",
+      "icon": "settings",
+      "url": "javascript:void(0);"
+    }
+  ]
+}

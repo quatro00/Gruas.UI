@@ -1,0 +1,147 @@
+<div nz-row nzGutter="25">
+    <!-- skeleton -->
+    <ng-template #loadingSkeleton>
+      <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+        [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    </ng-template>
+    <!-- skeleton -->
+  
+  
+    
+    <div nz-col nzXs="24" class="mb-[25px]">
+      <ng-container *ngIf="showContent; else loadingSkeleton">
+        <div
+          class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+          <div
+            class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+            <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Nuevo servicio</h4>
+          </div>
+          <div class="p-[25px]">
+            <form nz-form [formGroup]="validateForm">
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Tipo de vehículo</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select (ngModelChange)="tipoVehiculoChanged()"  class="basic-select" name="basicSelect" formControlName="TipoVehiculo">
+                    <nz-option nzValue="Auto" nzLabel="Auto"></nz-option>
+                    <nz-option nzValue="Motiocicleta" nzLabel="Motocicleta"></nz-option>
+                    <nz-option nzValue="Camión" nzLabel="Camión"></nz-option>
+                    <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+
+
+                <nz-form-item *ngIf="tipoVehiculo == 'Otro'">
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60"
+                      nzFor="cuentas">Especifique</nz-form-label>
+                      <nz-form-control >
+                        <input formControlName="cuentas"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2" type="text" id="text2">
+                      </nz-form-control>
+                  </nz-form-item>
+
+
+              
+             
+                <nz-form-control nzXs="1">
+                
+                </nz-form-control>
+
+                
+              
+                <nz-form-control nzXs="1"></nz-form-control>
+
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Caducidad</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="fechaCaducidad"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2" type="date" id="text2">
+                </nz-form-control>
+
+                <nz-form-control nzXs="1"></nz-form-control>
+
+                <nz-form-control nzXs="2">
+                  <br/>
+                  <nz-checkbox-wrapper class="flex flex-col w-full capitalize basic-checkbox text-theme-gray dark:text-white/60 gap-[5px] mb-[15px]" (nzOnChange)="log($event)">
+                    <label class=" m-0 text-dark dark:text-white/[.87]" nz-checkbox nzValue="A">Obligatorio</label>
+                  </nz-checkbox-wrapper>
+                </nz-form-control>
+
+              </nz-form-item>
+
+              <nz-form-item *ngIf="tipoMensaje == '3'">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
+                  nzFor="pass">Cuentas</nz-form-label>
+                  <nz-form-control nzXs="21">
+                    <nz-select class="basic-select" name="basicSelect" nzMode="tags"name="basicSelect" formControlName="cuentas">
+                      <nz-option *ngFor="let option of usuarios" [nzLabel]="option.nombreCompleto" [nzValue]="option.id">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+              </nz-form-item>
+
+
+              <nz-form-item >
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
+                nzFor="pass">Archivo</nz-form-label>
+
+                <nz-form-control nzXs="21">
+                  <input accept=".pdf" formControlName="archivo" type="file" (change)="onFileSelect($event)">
+                </nz-form-control>
+
+                
+              
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="24" nzFor="text2">Mensaje</nz-form-label>
+                <nz-form-control nzErrorTip="Campo requerido." nzXs="24">
+                  <div class="p-[25px]">
+                    <div *nzIf=""></div>
+  
+                    <div *ngIf="isDarkMode(); then thenTemplateName else elseTemplateName"></div>
+  
+                    <ng-template #thenTemplateName>
+                      <editor 
+                      formControlName="mensaje"
+                      apiKey="okigakre3cf2mv7k6w9wrb1hfyigbirehygh7a12o179ax5t" [init]="{
+                      plugins: 'lists table code help wordcount',
+                      toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | ltr rtl',
+                      skin: 'oxide-dark',
+                      content_css: 'dark'
+                    }"></editor>
+                    </ng-template>
+  
+                    <ng-template #elseTemplateName>
+                      <editor 
+                      formControlName="mensaje"
+                      apiKey="okigakre3cf2mv7k6w9wrb1hfyigbirehygh7a12o179ax5t" [init]="{
+                    plugins: 'lists table code help wordcount',
+                    toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | ltr rtl',
+                      
+                    }"></editor>
+                    </ng-template>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              
+              <nz-form-item nzJustify="end">
+                <nz-form-control nzXs="19"></nz-form-control>
+                <nz-form-control nzXs="3">
+                  <div class="flex flex-wrap gap-[15px]">
+                    <button nz-button (click)="submitForm()" [nzLoading]="btnLoading"
+                      class="bg-primary hover:bg-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] duration-300">
+                      <span>Crear mensaje</span>
+                    </button>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+            </form>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    </div>
+  
