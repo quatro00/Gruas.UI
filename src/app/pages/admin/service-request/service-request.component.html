@@ -1,0 +1,229 @@
+
+<div nz-row nzGutter="25">
+  <ng-template #loadingSkeleton>
+    <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+      [nzParagraph]="{ rows: 5 }"></nz-skeleton>
+  </ng-template>
+  <ng-template #loadingSkeleton>
+    <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+      [nzParagraph]="{ rows: 2 }"></nz-skeleton>
+  </ng-template>
+  <!-- skeleton -->
+  <ng-template #loadingSkeleton>
+    <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+      [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+  </ng-template>
+  <!-- skeleton -->
+
+
+  <div nz-col nzXs="24" class="mb-[25px]">
+      <ng-container *ngIf="showContent; else loadingSkeleton">
+        <div
+          class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+          <div
+            class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+            <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Solicitud de servicio</h4>
+          </div>
+          <div class="p-[25px] bg-normal">
+            <div>
+              <div class="p-[25px] flex justify-center items-center">
+                <div class="w-full overflow-x-auto">
+                  <h1 style="text-align: center;" class="mt-10 mb-6 font-semibold text-dark dark:text-white/[.87] text-3xl lg:text-[26px] max-sm:text-2xl leading-10">Solicitud de servicio de grua</h1>
+                  </div>
+              </div>
+
+              <div nz-col nzXs="24" class="mb-[25px] [&>.ant-skeleton]:mb-[20px]">
+                <div nz-row nzGutter="25">
+                 
+                 
+                  <div class="duration-300" nz-col nzXXl="6" nzLg="6" nzSm="12" nzXs="24" class="mb-[25px]">
+                    <ng-container *ngIf="showContentGallery; else loadingSkeleton">
+                      <figure class="bg-white dark:bg-white/10 rounded-10">
+                        <img class="w-full h-[276px] rounded-10" src="../../../assets/images/gallery/automovil.webp">
+                        <figcaption>
+                          <div class="px-6 py-5">
+                            <h2 style="font-size: 22px;" class="text-25 font-medium mb-0.5 text-dark dark:text-white/[.87]">Información del vehículo</h2>
+                            <table class="mb-0 text-light dark:text-white/60 text-18" style="width: 100%;font-size: 22px;">
+                              <tr>
+                                <td><b>Tipo:</b></td>
+                                <td>[Tipo]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Placas:</b></td>
+                                <td>[Placas]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Marca:</b></td>
+                                <td>[Marca]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Modelo:</b></td>
+                                <td>[Modelo]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Año:</b></td>
+                                <td>[Año]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Num. de personas</b></td>
+                                <td>[NoPersonas]</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </ng-container>
+                  </div>
+
+                  <div class="duration-300" nz-col nzXXl="6" nzLg="6" nzSm="12" nzXs="24" class="mb-[25px]">
+                    <ng-container *ngIf="showContentGallery; else loadingSkeleton">
+                      <figure class="bg-white dark:bg-white/10 rounded-10">
+                        <img class="w-full h-[276px] rounded-10" src="../../../assets/images/gallery/traslado.webp">
+                        <figcaption>
+                          <div class="px-6 py-5">
+                            <h2 style="font-size: 22px;" class="text-25 font-medium mb-0.5 text-dark dark:text-white/[.87]">Datos del traslado</h2>
+                            <table class="mb-0 text-light dark:text-white/60 text-18" style="width: 100%;font-size: 22px;">
+                              <tr>
+                                <td><b>Origen:</b></td>
+                                <td>[Origen]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Destino:</b></td>
+                                <td>[Destino]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Estado:</b></td>
+                                <td>[Estado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Municipio:</b></td>
+                                <td>[Municipio]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Kilometros:</b></td>
+                                <td>[Kilometros]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Tiempo estimado:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </ng-container>
+                  </div>
+
+                  <div class="duration-300" nz-col nzXXl="6" nzLg="6" nzSm="12" nzXs="24" class="mb-[25px]">
+                    <ng-container *ngIf="showContentGallery; else loadingSkeleton">
+                      <figure class="bg-white dark:bg-white/10 rounded-10">
+                        <img class="w-full h-[276px] rounded-10" src="../../../assets/images/gallery/informacion.webp">
+                        <figcaption>
+                          <div class="px-6 py-5">
+                            <h2 style="font-size: 22px;" class="text-25 font-medium mb-0.5 text-dark dark:text-white/[.87]">Datos adicionales</h2>
+                            <table class="mb-0 text-light dark:text-white/60 text-18" style="width: 100%;font-size: 22px;">
+                              <tr>
+                                <td><b>Fuga de combustible:</b></td>
+                                <td>[Origen]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Las llantas giran:</b></td>
+                                <td>[Destino]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Es posible colocar neutral:</b></td>
+                                <td>[Estado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Personas en vehículo:</b></td>
+                                <td>[Municipio]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Lugar:</b></td>
+                                <td>[Kilometros]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Carril:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Kilometro:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Tipo de estacionamiento:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Piso de estacionamiento:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Vehiculo accidentado:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </ng-container>
+                  </div>
+
+
+                  <div class="duration-300" nz-col nzXXl="6" nzLg="6" nzSm="12" nzXs="6" class="mb-[25px]">
+                    <ng-container *ngIf="showContentGallery; else loadingSkeleton">
+                      <figure class="bg-white dark:bg-white/10 rounded-10">
+                        <img class="w-full h-[276px] rounded-10" src="../../../assets/images/gallery/subtotal.webp">
+                        <figcaption>
+                          <div class="px-6 py-5">
+                            <h2 style="font-size: 22px;" class="text-25 font-medium mb-0.5 text-dark dark:text-white/[.87]">Costo</h2>
+                            <table class="mb-0 text-light dark:text-white/60 text-18" style="width: 100%;font-size: 22px;">
+                              
+                              <tr>
+                                <td><b>Kilometros:</b></td>
+                                <td>[Origen]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Tarifa inicial:</b></td>
+                                <td>[Destino]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Es posible colocar neutral:</b></td>
+                                <td>[Estado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Costo por km:</b></td>
+                                <td>[Municipio]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Tarifa inamica:</b></td>
+                                <td>[Kilometros]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Maniobras:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              <tr>
+                                <td><b>Total sugerido:</b></td>
+                                <td>[TiempoEstimado]</td>
+                              </tr>
+                              
+                            </table>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </ng-container>
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  
+</div>
+

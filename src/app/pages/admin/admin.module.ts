@@ -54,6 +54,7 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { PagosComponent } from './reportes/pagos/pagos.component';
 import { CrearServicioComponent } from './crear-servicio/crear-servicio.component';
+import { ServiceRequestComponent } from './service-request/service-request.component';
 
 const antdModule = [
   HotTableModule.forRoot(),
@@ -108,7 +109,8 @@ registerAllModules();
     ServiciosComponent,
     ClientesComponent,
     PagosComponent,
-    CrearServicioComponent
+    CrearServicioComponent,
+    ServiceRequestComponent
   ],
   imports: [
     CommonModule,

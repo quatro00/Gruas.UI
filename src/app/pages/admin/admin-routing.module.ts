@@ -7,6 +7,7 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { PagosComponent } from './reportes/pagos/pagos.component';
 import { CrearServicioComponent } from './crear-servicio/crear-servicio.component';
+import { ServiceRequestComponent } from './service-request/service-request.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,14 @@ const routes: Routes = [
     component: CrearServicioComponent,
     data: {
         title: 'Crear servicio',
+    },
+    //canActivate: [authAdminGuard]
+  },
+  {
+    path: 'solicitud-servicio',
+    component: ServiceRequestComponent,
+    data: {
+        title: 'Solicitud de servicio',
     },
     //canActivate: [authAdminGuard]
   },

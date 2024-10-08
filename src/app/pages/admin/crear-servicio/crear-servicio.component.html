@@ -9,7 +9,7 @@
   
     
     <div nz-col nzXs="24" class="mb-[25px]">
-      <ng-container *ngIf="showContent; else loadingSkeleton">
+      <ng-container>
         <div
           class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
           <div
@@ -18,113 +18,267 @@
           </div>
           <div class="p-[25px]">
             <form nz-form [formGroup]="validateForm">
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Datos del cliente</h4><br>
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Teléfono<br>10 digitos</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="telefono" type="text"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2" minlength="10" maxlength="10" pattern="[0-9]*"  (keypress)="validateInput($event)">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Correo electrónico</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="correoElectronico" type="text"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Nombre</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="nombre" type="text"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Apellidos</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="apellidos" type="text"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Datos del servicio</h4><br>
               <nz-form-item>
                 <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Tipo de vehículo</nz-form-label>
                 <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
-                  <nz-select (ngModelChange)="tipoVehiculoChanged()"  class="basic-select" name="basicSelect" formControlName="TipoVehiculo">
+                  <nz-select (ngModelChange)="tipoVehiculoChanged()"  class="basic-select" name="basicSelect" formControlName="tipoVehiculo">
                     <nz-option nzValue="Auto" nzLabel="Auto"></nz-option>
                     <nz-option nzValue="Motiocicleta" nzLabel="Motocicleta"></nz-option>
                     <nz-option nzValue="Camión" nzLabel="Camión"></nz-option>
                     <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
                   </nz-select>
                 </nz-form-control>
-
-
                 <nz-form-item *ngIf="tipoVehiculo == 'Otro'">
                     <nz-form-label class="flex items-center font-medium dark:text-white/60"
                       nzFor="cuentas">Especifique</nz-form-label>
                       <nz-form-control >
-                        <input formControlName="cuentas"
+                        <input formControlName="especifique"
                     class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
                     nz-input name="text2" type="text" id="text2">
                       </nz-form-control>
                   </nz-form-item>
-
-
-              
-             
-                <nz-form-control nzXs="1">
                 
-                </nz-form-control>
 
-                
-              
-                <nz-form-control nzXs="1"></nz-form-control>
-
-                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Caducidad</nz-form-label>
+                  <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Fecha del servicio</nz-form-label>
                 <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
-                  <input formControlName="fechaCaducidad"
+                  <input formControlName="fecha" type="datetime-local"
                     class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
-                    nz-input name="text2" type="date" id="text2">
-                </nz-form-control>
-
-                <nz-form-control nzXs="1"></nz-form-control>
-
-                <nz-form-control nzXs="2">
-                  <br/>
-                  <nz-checkbox-wrapper class="flex flex-col w-full capitalize basic-checkbox text-theme-gray dark:text-white/60 gap-[5px] mb-[15px]" (nzOnChange)="log($event)">
-                    <label class=" m-0 text-dark dark:text-white/[.87]" nz-checkbox nzValue="A">Obligatorio</label>
-                  </nz-checkbox-wrapper>
+                    nz-input name="text2">
                 </nz-form-control>
 
               </nz-form-item>
 
-              <nz-form-item *ngIf="tipoMensaje == '3'">
-                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
-                  nzFor="pass">Cuentas</nz-form-label>
-                  <nz-form-control nzXs="21">
-                    <nz-select class="basic-select" name="basicSelect" nzMode="tags"name="basicSelect" formControlName="cuentas">
-                      <nz-option *ngFor="let option of usuarios" [nzLabel]="option.nombreCompleto" [nzValue]="option.id">
-                      </nz-option>
-                    </nz-select>
-                  </nz-form-control>
-              </nz-form-item>
-
-
-              <nz-form-item >
-                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
-                nzFor="pass">Archivo</nz-form-label>
-
-                <nz-form-control nzXs="21">
-                  <input accept=".pdf" formControlName="archivo" type="file" (change)="onFileSelect($event)">
+            
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Origen</nz-form-label>
+                <nz-form-control nzXs="19" nzErrorTip="Campo requerido.">
+                  <input formControlName="origen" #searchOrigen
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
                 </nz-form-control>
-
-                
-              
               </nz-form-item>
 
               <nz-form-item>
-                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="24" nzFor="text2">Mensaje</nz-form-label>
-                <nz-form-control nzErrorTip="Campo requerido." nzXs="24">
-                  <div class="p-[25px]">
-                    <div *nzIf=""></div>
-  
-                    <div *ngIf="isDarkMode(); then thenTemplateName else elseTemplateName"></div>
-  
-                    <ng-template #thenTemplateName>
-                      <editor 
-                      formControlName="mensaje"
-                      apiKey="okigakre3cf2mv7k6w9wrb1hfyigbirehygh7a12o179ax5t" [init]="{
-                      plugins: 'lists table code help wordcount',
-                      toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | ltr rtl',
-                      skin: 'oxide-dark',
-                      content_css: 'dark'
-                    }"></editor>
-                    </ng-template>
-  
-                    <ng-template #elseTemplateName>
-                      <editor 
-                      formControlName="mensaje"
-                      apiKey="okigakre3cf2mv7k6w9wrb1hfyigbirehygh7a12o179ax5t" [init]="{
-                    plugins: 'lists table code help wordcount',
-                    toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | ltr rtl',
-                      
-                    }"></editor>
-                    </ng-template>
-                  </div>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Referencia</nz-form-label>
+                <nz-form-control nzXs="19" nzErrorTip="Campo requerido.">
+                  <input formControlName="referenciaOrigen" 
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
                 </nz-form-control>
               </nz-form-item>
 
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Destino</nz-form-label>
+                <nz-form-control nzXs="19" nzErrorTip="Campo requerido.">
+                  <input formControlName="destino" #searchDestino
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+
+
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Referencia</nz-form-label>
+                <nz-form-control nzXs="19" nzErrorTip="Campo requerido.">
+                  <input formControlName="referenciaDestino" 
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+
+
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Sufrio un accidente</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="accidente">
+                    <nz-option nzValue="1" nzLabel="Si"></nz-option>
+                    <nz-option nzValue="0" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Fuga combustibe</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="fugaCombustible">
+                    <nz-option nzValue="1" nzLabel="Si"></nz-option>
+                    <nz-option nzValue="0" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Llantas giran</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="llantasGiran">
+                    <nz-option nzValue="1" nzLabel="Si"></nz-option>
+                    <nz-option nzValue="0" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Puede neutral</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="puedeNeutral">
+                    <nz-option nzValue="1" nzLabel="Si"></nz-option>
+                    <nz-option nzValue="0" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Cantidad personas</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="cantidadPersonas" type="number"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Donde se encuentra<br>el vehiculo</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select (ngModelChange)="lugarUbicuidadChanged()" class="basic-select" name="basicSelect" formControlName="lugarUbicuidad">
+                    <nz-option nzValue="Pie de calle" nzLabel="Pie de calle"></nz-option>
+                    <nz-option nzValue="Carretera" nzLabel="Carretera"></nz-option>
+                    <nz-option nzValue="Cochera" nzLabel="Cochera"></nz-option>
+                    <nz-option nzValue="Estacionamiento" nzLabel="Estacionamiento"></nz-option>
+                    <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+
+              </nz-form-item>
+
+              <nz-form-item *ngIf="lugarUbicuidad == 'Carretera'">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Carril</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="carril">
+                    <nz-option nzValue="Central" nzLabel="Central"></nz-option>
+                    <nz-option nzValue="Lateral" nzLabel="Lateral"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Kilometro</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="km" type="number"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Ciudad de destino</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="ciudad"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item *ngIf="lugarUbicuidad == 'Estacionamiento'">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Tipo estacionamiento</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="tipoEstacionamiento">
+                    <nz-option nzValue="Aire libre" nzLabel="Aire libre"></nz-option>
+                    <nz-option nzValue="Techado" nzLabel="Techado"></nz-option>
+                    <nz-option nzValue="Subterraneo" nzLabel="Subterraneo"></nz-option>
+                    <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Piso/nivel</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="piso" type="number"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Datos del vehículo</h4><br>
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Marca</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="marca" type="text"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Modelo</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="modelo" type="text"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Año</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="anio" type="number"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Color</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="color" type="text"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Permiso</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+
+                  <nz-select class="basic-select" name="basicSelect" formControlName="permiso">
+                    <nz-option nzValue="Placa" nzLabel="Placa"></nz-option>
+                    <nz-option nzValue="Permiso para circular" nzLabel="Permiso"></nz-option>
+                    <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Placa/Permiso</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="placaPermiso" type="text"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Cuenta con modificaciones</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <nz-select class="basic-select" name="modificaciones" formControlName="modificaciones">
+                    <nz-option nzValue="1" nzLabel="Si"></nz-option>
+                    <nz-option nzValue="0" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+                <nz-form-control nzXs="1"></nz-form-control>
+                <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="2" nzFor="text2">Especifique</nz-form-label>
+                <nz-form-control nzXs="3" nzErrorTip="Campo requerido.">
+                  <input formControlName="modificacionesEspecificacion" type="text"
+                  class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                  nz-input name="text2">
+                </nz-form-control>
+              </nz-form-item>
               
               <nz-form-item nzJustify="end">
                 <nz-form-control nzXs="19"></nz-form-control>
@@ -132,7 +286,7 @@
                   <div class="flex flex-wrap gap-[15px]">
                     <button nz-button (click)="submitForm()" [nzLoading]="btnLoading"
                       class="bg-primary hover:bg-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] duration-300">
-                      <span>Crear mensaje</span>
+                      <span>Crear servicio</span>
                     </button>
                   </div>
                 </nz-form-control>

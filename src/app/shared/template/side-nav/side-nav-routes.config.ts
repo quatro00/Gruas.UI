@@ -21,6 +21,14 @@ export const AdminRoutes: SideNavInterface[] = [
     submenu:[]
   },
   {
+    path: 'administrador/solicitud-servicio',
+    title: 'Servicios',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: '',
+    submenu:[]
+  },
+  {
     path: 'administrador/proveedores',
     title: 'Proveedores',
     iconType: 'nzIcon',
