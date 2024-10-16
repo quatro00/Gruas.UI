@@ -5,6 +5,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { ServicioService } from 'src/app/services/servicio.service';
 
 @Component({
   styles:  [`
@@ -29,6 +30,7 @@ export class ServiciosComponent {
   isLoading = true;
   showContent = false;
   validateForm!: UntypedFormGroup;
+  data:any[]=[];
 
   constructor(
     private modalService: NzModalService, 
@@ -36,6 +38,7 @@ export class ServiciosComponent {
     private router: Router, 
     private datePipe: DatePipe,
     private fb: UntypedFormBuilder,
+    private servicioService:ServicioService,
     private http: HttpClient) {}
 
   ngOnInit() {
@@ -50,6 +53,19 @@ export class ServiciosComponent {
   }
 
   loadData() {
+    this.servicioService.GetAllServicios()
+    .subscribe({
+      next:(response)=>{
+        this.data = response;
+        //this.razonesSociales = response.razonesSociales;
+      },
+      complete:()=>{
+        //this.btnLoading = false;
+      },
+      error:()=>{
+        //this.btnLoading = false;
+      }
+    })
     // Simulate an asynchronous data loading operation
     setTimeout(() => {
       this.isLoading = false;
@@ -59,6 +75,10 @@ export class ServiciosComponent {
 
   crearServicio(){
     this.router.navigateByUrl(`administrador/crear-servicio`); 
+  }
+
+  verServicio(id:string){
+    this.router.navigateByUrl(`administrador/solicitud-servicio/${id}`);
   }
 
   submitForm(): void {

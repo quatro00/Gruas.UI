@@ -18,4 +18,16 @@ export class ServicioService {
     return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/RegistraServicio`,request);
   }
 
+  GetAllServicios():Observable<any>{
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetSerrvicios`);
+  }
+
+  GetServicio(id:string):Observable<any>{
+    let params = new HttpParams();
+    params = params.append('servicioId', id);
+
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServicio`,{params});
+
+  }
+
 }

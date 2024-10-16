@@ -35,7 +35,7 @@ const routes: Routes = [
     //canActivate: [authAdminGuard]
   },
   {
-    path: 'solicitud-servicio',
+    path: 'solicitud-servicio/:id',
     component: ServiceRequestComponent,
     data: {
         title: 'Solicitud de servicio',
