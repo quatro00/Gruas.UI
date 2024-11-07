@@ -29,6 +29,14 @@ export const AdminRoutes: SideNavInterface[] = [
     submenu:[]
   },
   {
+    path: 'administrador/gruas',
+    title: 'Gruas',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: '',
+    submenu:[]
+  },
+  {
     path: 'administrador/usuarios',
     title: 'Usuarios',
     iconType: 'nzIcon',

@@ -8,6 +8,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { PagosComponent } from './reportes/pagos/pagos.component';
 import { CrearServicioComponent } from './crear-servicio/crear-servicio.component';
 import { ServiceRequestComponent } from './service-request/service-request.component';
+import { GruasComponent } from './gruas/gruas.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,14 @@ const routes: Routes = [
     component: ServiciosComponent,
     data: {
         title: 'Servicios',
+    },
+    //canActivate: [authAdminGuard]
+  },
+  {
+    path: 'gruas',
+    component: GruasComponent,
+    data: {
+        title: 'Gruas',
     },
     //canActivate: [authAdminGuard]
   },

@@ -10,12 +10,12 @@ import { EstadoModel } from '../models/catalogos/estado-model';
 })
 export class CatalogosService {
 
-  service:string = 'Catalogos';
+  service:string = 'Catalogo';
 
 
   constructor(private http:HttpClient, private cookieService: CookieService) { }
 
-  UploadReporteAltas(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/UploadReporteAltas`, formData);
+  GetTipoGrua():Observable<any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetTipoGrua`);
   }
 }
