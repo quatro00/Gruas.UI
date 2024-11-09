@@ -30,4 +30,23 @@ export class ServicioService {
 
   }
 
+  AsignarGrua(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/AsignarGrua`,request);
+  }
+
+  CancelarServicio(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/CancelarServicio`,request);
+  }
+
+  SolicitarCotizaciones(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/SolicitarCotizaciones`,request);
+  }
+
+  ColocarEnPropuesta(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/ColocarEnPropuesta`,request);
+  }
+
+  TerminarServicio(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/TerminarServicio`,request);
+  }
 }

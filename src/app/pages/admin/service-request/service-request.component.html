@@ -15,9 +15,333 @@
   </ng-template>
   <!-- skeleton -->
 
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]="modalTitle"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    [nzWidth]="1280"
+    (nzOnCancel)="handleCancel()"
+  >
+    <ng-template #modalTitle>Gruas</ng-template>
+
+    <ng-template #modalContent>
+      <div class="p-[25px]">
+        <div
+          class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+          <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+          </div>
+          <div class="ssm:min-w-[280px]">
+            <nz-input-group
+              class="h-10 inline-flex items-center text-body dark:text-white/60 bg-white dark:bg-white/10 border-normal border-1 dark:border-white/10 rounded-[6px] px-[20px]">
+              <i class="text-light dark:text-white/[.87] text-[18px]" nz-icon nzType="search"></i>
+              <input
+                class="bg-transparent border-none text-[15px] shadow-none text-dark dark:text-white/[.87] flex items-center"
+                type="text" nz-input placeholder="Buscar" [(ngModel)]="searchValue" (ngModelChange)="filterItems()" />
+            </nz-input-group>
+          </div>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <input #fileInput accept=".pdf" type="file" (change)="onFileSelect($event)" style="display: none;">
+
+          <nz-table #basicTable nzShowSizeChanger [nzData]="filteredData">
+            <thead>
+              <tr>
+
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Proveedor</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Tipo de grua</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Placas</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Marca</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Modelo</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Año</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  Activo</th>
+                <th
+                  class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group" *ngFor="let item of basicTable.data">
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.proveedor }}</td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.tipoGrua }}</td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.placas }}</td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.marca }}</td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.modelo }}</td>
+                  <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  {{ item.anio   }}</td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+
+                  <div *ngIf="item.activo === 1">Activo</div>
+                  <div *ngIf="item.activo === 0">Inactivo</div>
+                </td>
+                <td
+                  class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                  <button nz-button (click)="showEditCotizacion(item)"
+                    class="bg-primary/10 hover:bg-primary-hbr border-none text-primary hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] [&>span]:inline-flex">
+                    Seleccionar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+      
+    </ng-template>
+  </nz-modal>
+
+
+  <nz-modal
+  [(nzVisible)]="isVisibleCotizacion"
+  [nzTitle]="modalTitleCotizacion"
+  [nzContent]="modalContentCotizacion"
+  [nzFooter]="modalFooterCotizacion"
+  [nzWidth]="880"
+  (nzOnCancel)="handleCancelCotizacion()"
+>
+  <ng-template #modalTitleCotizacion>Cotización</ng-template>
+
+  <ng-template #modalContentCotizacion>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Proveedor</nz-form-label>
+            <input readonly formControlName="razonSocial" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input >
+          </nz-form-control>
+        </nz-form-item>
+       <nz-form-item>
+         <nz-form-control nzErrorTip="Campo requerido.">
+           <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Marca</nz-form-label>
+           <input readonly formControlName="marca" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+         </nz-form-control>
+       </nz-form-item>
+     
+       <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido.">
+          <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Modelo</nz-form-label>
+          <input readonly formControlName="modelo" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido.">
+          <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Placas</nz-form-label>
+          <input readonly formControlName="placas" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido.">
+          <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Año</nz-form-label>
+          <input readonly formControlName="anio" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido.">
+          <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Tiempo (Minutos)</nz-form-label>
+          <input formControlName="tiempo" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+        </nz-form-control>
+      </nz-form-item>
+      
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Campo requerido.">
+          <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Costo</nz-form-label>
+          <input formControlName="costo" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+        </nz-form-control>
+      </nz-form-item>
+     </form>
+  </ng-template>
+
+  <ng-template #modalFooterCotizacion>
+    <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="guardarCotizacion()" [nzLoading]="btnLoadingCotizacion">Guardar</button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal
+  [(nzVisible)]="isVisibleCancelacion"
+  [nzTitle]="modalTitleCancelacion"
+  [nzContent]="modalContentCancelacion"
+  [nzFooter]="modalFooterCancelacion"
+  (nzOnCancel)="handleCancelCancelacion()"
+>
+  <ng-template #modalTitleCancelacion>Cancelación</ng-template>
+
+  <ng-template #modalContentCancelacion>
+    <form nz-form nzLayout="vertical" [formGroup]="validateFormCancelacion" (ngSubmit)="submitFormCancelacion()">
+      <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Ingresa un motivo de cancelación</nz-form-label>
+            <input formControlName="motivo" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input >
+          </nz-form-control>
+        </nz-form-item>
+     </form>
+  </ng-template>
+
+  <ng-template #modalFooterCancelacion>
+    <button class="bg-danger hover:bg-danger-hbr hover:border-danger-hbr border-solid border-1 border-danger text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="danger" (click)="cancelarServicio()" [nzLoading]="btnLoadingCancelacion">Cancelar servicio</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleSolicitarCotizacion"
+  [nzTitle]="modalTitleSolicitarCotizacion"
+  [nzContent]="modalContentSolicitarCotizacion"
+  [nzFooter]="modalFooterSolicitarCotizacion"
+  (nzOnCancel)="handleCancelSolicitarCotizacion()"
+>
+  <ng-template #modalTitleSolicitarCotizacion>Solicitar cotización</ng-template>
+
+  <ng-template #modalContentSolicitarCotizacion>
+    <h5>Deseas solicitar cotizaciones para este servicio?</h5>
+  </ng-template>
+
+  <ng-template #modalFooterSolicitarCotizacion>
+    <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="enviarSolicitarCotizacion()" [nzLoading]="btnLoadingSolicitarCotizacion">Enviar</button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal
+  [(nzVisible)]="isVisibleTerminarServicio"
+  [nzTitle]="modalTitleTerminarServicio"
+  [nzContent]="modalContentTerminarServicio"
+  [nzFooter]="modalFooterTerminarServicio"
+  (nzOnCancel)="handleCancelTerminarServicio()"
+>
+  <ng-template #modalTitleTerminarServicio>Terminar servicio</ng-template>
+
+  <ng-template #modalContentTerminarServicio>
+    <h5>El servicio sera terminado</h5>
+  </ng-template>
+
+  <ng-template #modalFooterTerminarServicio>
+    <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="enviarTerminarServicio()" [nzLoading]="btnLoadingTerminarServicio">Terminar</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleEnviarPropuesta"
+  [nzTitle]="modalTitleEnviarPropuesta"
+  [nzContent]="modalContentEnviarPropuesta"
+  [nzFooter]="modalFooterEnviarPropuesta"
+  (nzOnCancel)="handleCancelEnviarPropuesta()"
+>
+  <ng-template #modalTitleEnviarPropuesta>Enviar propuesta</ng-template>
+
+  <ng-template #modalContentEnviarPropuesta>
+    <h5>Deseas enviar las propuestas para este servicio?</h5>
+  </ng-template>
+
+  <ng-template #modalFooterEnviarPropuesta>
+    <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="enviarEnviarPropuesta()" [nzLoading]="btnLoadingEnviarPropuesta">Enviar</button>
+  </ng-template>
+</nz-modal>
+
+
+  <div nz-col nzXs="24" class="mb-[25px]" *ngIf="showContent">
+    
+    <div class="flex items-center justify-center md:justify-end" *ngIf="estatusId === 1">
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showGruas()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Asignar grua</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showSolicitarCotizaciones()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Solicitar cotizaciones</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-danger border-danger h-10 gap-[6px]" (click)="showCancelacion()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="close-circle"></i>
+        <span class="m-0">Cancelar servicio</span>
+      </button>
+    </div>
+   
+    <div class="flex items-center justify-center md:justify-end" *ngIf="estatusId === 3">
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showGruas()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Asignar grua</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showEnviarPropuesta()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Enviar propuesta</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-danger border-danger h-10 gap-[6px]" (click)="showCancelacion()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="close-circle"></i>
+        <span class="m-0">Cancelar servicio</span>
+      </button>
+    </div>
+
+
+    <div class="flex items-center justify-center md:justify-end" *ngIf="estatusId === 4">
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showGruas()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Asignar grúa</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Aceptar cotización</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-danger border-danger h-10 gap-[6px]" (click)="showCancelacion()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="close-circle"></i>
+        <span class="m-0">Cancelar servicio</span>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-center md:justify-end" *ngIf="estatusId === 5">
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showTerminarServicio()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Terminar servicio</span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-danger border-danger h-10 gap-[6px]" (click)="showCancelacion()" nz-button >
+        <i class="text-[12px]" nz-icon nzType="close-circle"></i>
+        <span class="m-0">Cancelar servicio</span>
+      </button>
+    </div>
+
+     <!-- end: New Contact -->
+  </div>
 
   <div nz-col nzXs="24" class="mb-[25px]">
       <ng-container *ngIf="showContent; else loadingSkeleton">
+       
         <div
           class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
           <div class="flex justify-center items-center">

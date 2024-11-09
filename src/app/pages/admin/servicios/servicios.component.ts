@@ -57,6 +57,7 @@ export class ServiciosComponent {
     .subscribe({
       next:(response)=>{
         this.data = response;
+        console.log(this.data);
         //this.razonesSociales = response.razonesSociales;
       },
       complete:()=>{
