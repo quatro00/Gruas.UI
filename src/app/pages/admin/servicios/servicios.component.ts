@@ -32,6 +32,53 @@ export class ServiciosComponent {
   validateForm!: UntypedFormGroup;
   data:any[]=[];
 
+  listOfColumn = [
+    {
+      title: 'Folio',
+      compare: (a: any, b: any) => a.folio - b.folio
+    },
+    {
+      title: 'Cliente',
+      compare: (a: any, b: any) => a.cliente.localeCompare(b.cliente)
+    },
+    {
+      title: 'Telefono',
+      compare: (a: any, b: any) => a.telefono.localeCompare(b.telefono)
+    },
+    {
+      title: 'Estado',
+      compare: (a: any, b: any) => a.estado.localeCompare(b.estado)
+    },
+    {
+      title: 'Origen',
+      compare: (a: any, b: any) => a.origen.localeCompare(b.origen)
+    },
+    {
+      title: 'Destino',
+      compare: (a: any, b: any) => a.destino.localeCompare(b.destino)
+    },
+    {
+      title: 'Costo',
+      compare: (a: any, b: any) => a.costo.localeCompare(b.costo)
+    },
+    {
+      title: 'Estatus',
+      compare: (a: any, b: any) => a.estatus.localeCompare(b.estatus)
+    },
+    {
+      title: 'Proveedor',
+      compare: (a: any, b: any) => a.proveedor.localeCompare(b.proveedor)
+    },
+    {
+      title: 'Grua',
+      compare: (a: any, b: any) => a.gruaPlaca.localeCompare(b.gruaPlaca)
+    },
+    {
+      title: 'Tipo',
+      compare: (a: any, b: any) => a.gruaTipo.localeCompare(b.gruaTipo)
+    }
+  ];
+
   constructor(
     private modalService: NzModalService, 
     private msg: NzMessageService,
@@ -119,5 +166,19 @@ export class ServiciosComponent {
         }
       });
     }
+  }
+
+  orden(){
+    console.log(1);
+  }
+  sortMap: { [key: string]: 'ascend' | 'descend' | null } = {
+    folio: null
+  };
+
+  // Función para manejar el cambio de orden
+  onSortChange(sort): void {
+    this.data.sort((a, b) => {
+      return a.folio.localeCompare(b.folio);
+    });
   }
 }

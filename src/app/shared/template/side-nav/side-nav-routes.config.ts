@@ -21,6 +21,14 @@ export const AdminRoutes: SideNavInterface[] = [
     submenu:[]
   },
   {
+    path: 'administrador/registrar-pago',
+    title: 'Registrar pago',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: '',
+    submenu:[]
+  },
+  {
     path: 'administrador/proveedores',
     title: 'Proveedores',
     iconType: 'nzIcon',

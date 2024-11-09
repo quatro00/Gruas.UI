@@ -9,6 +9,7 @@ import { PagosComponent } from './reportes/pagos/pagos.component';
 import { CrearServicioComponent } from './crear-servicio/crear-servicio.component';
 import { ServiceRequestComponent } from './service-request/service-request.component';
 import { GruasComponent } from './gruas/gruas.component';
+import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,14 @@ const routes: Routes = [
         title: 'Clientes',
     },
     
+    //canActivate: [authAdminGuard]
+  },
+  {
+    path: 'registrar-pago',
+    component: RegistrarPagoComponent,
+    data: {
+        title: 'Registrar pago',
+    },
     //canActivate: [authAdminGuard]
   },
   {

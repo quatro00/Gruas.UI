@@ -1,0 +1,143 @@
+<div nz-row nzGutter="25">
+    <!-- skeleton -->
+    <ng-template #loadingSkeleton>
+      <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+        [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    </ng-template>
+    <!-- skeleton -->
+     
+    <nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #modalTitle>Registrar pago</ng-template>
+
+  <ng-template #modalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateRegistrarPago" (ngSubmit)="submitFormCancelacion()">
+      <nz-form-item>
+          <nz-form-control nzErrorTip="Campo requerido.">
+            <nz-form-label class="text-[15px] font-semibold text-dark capitalize mb-[10px]">Concepto del pago</nz-form-label>
+            <input formControlName="concepto" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input >
+          </nz-form-control>
+        </nz-form-item>
+     </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]" nz-button nzType="primary" (click)="registrarPago()" [nzLoading]="btnLoadingRegistrarPago">Registrar pago</button>
+  </ng-template>
+</nz-modal>
+
+    <div nz-col nzXs="24" class="mb-[25px]">
+      <ng-container *ngIf="showContent; else loadingSkeleton">
+        <div
+          class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+          <div
+            class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+            <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Registrar pago</h4>
+          </div>
+          <div class="p-[25px]">
+            <div>
+              
+              <form class="max-w-full" [formGroup]="validateForm">
+                <nz-form-item>
+                  <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3" nzFor="text2">Proveedor</nz-form-label>
+                  <nz-form-control nzXs="6" nzErrorTip="Campo requerido." >
+                    <nz-select class="basic-select" name="basicSelect" formControlName="proveedor">
+                        <nz-option *ngFor="let option of proveedores" [nzLabel]="option.noProveedor + ' - ' + option.razonSocial" [nzValue]="option.id">
+                        </nz-option>
+                      </nz-select>
+                </nz-form-control>
+                  <nz-form-control nzXs="1">
+                  </nz-form-control>
+                  <nz-form-control nzXs="1">
+                  <button [nzLoading]="btnLoadingBusqueda" (click)="buscaPagos()" class="bg-primary hover:bg-primary-hbr inline-flex items-center outline-none shadow-none w-fit duration-300 text-white capitalize px-[20px] text-[15px] border-primary hover:border-primary-hbr rounded-[5px] gap-[8px] h-[46px]" nz-button nzType="primary" >
+                        <span>Buscar</span>
+                        <span nz-icon nzType="search" nzTheme="outline"></span>
+                      </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+              <div class="p-[25px]">
+                      <div class="w-full overflow-x-auto">
+                          <nz-table #basicTable 
+                          nzShowSizeChanger="false"
+                          [nzFrontPagination]="false"
+                          [nzFooter]="null"
+                          [nzData]="data"
+                          [nzPagination]="false"
+                          >
+                            <thead>
+                              <tr>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Folio</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Cliente</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Telefono</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Fecha</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Grua</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Tipo</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Estatus</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Subtotal</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Comision</th>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Total</th>
+                                
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Seleccionar</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="group" *ngFor="let item of basicTable.data">
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.folio }}</td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.cliente }}</td> 
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono }}</td> 
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.grua }}</td> 
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.tipo }}</td> 
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.estatus }}</td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.subTotal | currency: 'USD':'symbol':'1.2-2'}}</td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                                <input type="text"
+         [(ngModel)]="item.comision" type="number" min="0"
+         (input)="item.total = item.subTotal - item.comision"
+         class="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-primary dark:border-gray-600 dark:focus:border-white"
+         placeholder="Editar comisión">
+
+                              
+                            
+                            </td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.total | currency: 'USD':'symbol':'1.2-2'}}</td>
+                               <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+
+                                <nz-checkbox-wrapper class="flex flex-col w-full capitalize basic-checkbox text-theme-gray dark:text-white/60 gap-[5px] mb-[15px]"
+                              >
+          <label class="m-0 text-dark dark:text-white/[.87]" nz-checkbox [(ngModel)]="item.checked" [nzValue]="item.folio"></label>
+        </nz-checkbox-wrapper>
+
+                               </td>
+                              </tr>
+                            </tbody>
+                          </nz-table>
+                        </div>
+                    </div>
+            </div>
+          </div>
+
+          <div nz-col nzXs="24" class="mb-[25px]">
+            <!-- New Contact -->
+            <div class="flex items-center justify-center md:justify-end">
+             <button [disabled]="!isAnySelected()" class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="showRegistrarPagoModal()" nz-button >
+               <span class="m-0">Registrar pago</span>
+             </button>
+           </div>
+             <!-- end: New Contact -->
+          </div>
+          
+        </div>
+
+        <button (click)="printSelectedItems()">Imprimir</button>
+
+      </ng-container>
+    </div>
+    </div>
+  
