@@ -22,6 +22,14 @@ export class ServicioService {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetSerrvicios`);
   }
 
+  GetAllServiciosByEstatus(id:string):Observable<any>{
+    let params = new HttpParams();
+    params = params.append('estatusServicioId', id);
+
+
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetSerrvicios`,{params});
+  }
+
   GetServicio(id:string):Observable<any>{
     let params = new HttpParams();
     params = params.append('servicioId', id);

@@ -18,4 +18,12 @@ export class CatalogosService {
   GetTipoGrua():Observable<any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetTipoGrua`);
   }
+
+  GetEstatusServicio():Observable<any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetEstatusServicio`);
+  }
+
+  GetEstatusPago():Observable<any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetEstatusPago`);
+  }
 }

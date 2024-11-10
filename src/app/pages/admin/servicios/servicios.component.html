@@ -27,11 +27,59 @@
             </div>
             <div class="p-[25px]">
               <div>
+                <form class="max-w-full" [formGroup]="validateForm">
+                  <nz-form-item>
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3" nzFor="text2">Estatus:</nz-form-label>
+                    <nz-form-control nzXs="6" nzErrorTip="Campo requerido." >
+                      <nz-select class="basic-select" name="basicSelect" formControlName="estatus">
+                          <nz-option *ngFor="let option of estatus" [nzLabel]="option.descripcion" [nzValue]="option.id">
+                          </nz-option>
+                        </nz-select>
+                  </nz-form-control>
+                    <nz-form-control nzXs="1">
+                    </nz-form-control>
+                    <nz-form-control nzXs="1">
+                    <button [nzLoading]="btnLoadingBusqueda" (click)="buscaServicios()" class="bg-primary hover:bg-primary-hbr inline-flex items-center outline-none shadow-none w-fit duration-300 text-white capitalize px-[20px] text-[15px] border-primary hover:border-primary-hbr rounded-[5px] gap-[8px] h-[46px]" nz-button nzType="primary" >
+                          <span>Buscar</span>
+                          <span nz-icon nzType="search" nzTheme="outline"></span>
+                        </button>
+                    </nz-form-control>
+                  </nz-form-item>
+                </form>
+
                 <div class="p-[25px]">
+
+                  <div class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+                    <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+                    </div>
+                    <div class="ssm:min-w-[380px]">
+                      <table>
+                        <tr>
+                          <td>
+                            <nz-input-group class="h-10 inline-flex items-center text-body dark:text-white/60 bg-white dark:bg-white/10 border-normal border-1 dark:border-white/10 rounded-[6px] px-[20px]">
+                              <i class="text-light dark:text-white/[.87] text-[18px]" nz-icon nzType="search"></i>
+                              <input
+                                class="bg-transparent border-none text-[15px] shadow-none text-dark dark:text-white/[.87] flex items-center"
+                                type="text"
+                                nz-input
+                                placeholder="Buscar"
+                                [(ngModel)]="searchValue"
+                                (ngModelChange)="filterItems()"
+                              />
+                            </nz-input-group>
+                          </td>
+                          <td>
+                            <button nz-button (click)="exportToExcel()">Exportar a Excel</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
                         <div class="w-full overflow-x-auto">
                             <nz-table #basicTable 
                             nzShowSizeChanger
-                            [nzData]="data"
+                            [nzData]="filteredData"
                             >
                               <thead>
                                 <tr>
