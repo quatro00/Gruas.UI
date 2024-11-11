@@ -4,8 +4,24 @@ import { ProveedoresService } from 'src/app/services/proveedores.service';
 import { CatalogosService } from '../../../services/catalogos.service';
 import { GruaService } from 'src/app/services/grua.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { forkJoin } from 'rxjs';
+import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
+  styles: [`
+    :host ::ng-deep .basic-select .ant-select-selector{
+      @apply h-[50px] rounded-4 border-normal px-[20px] flex items-center dark:bg-white/10 dark:border-white/10 dark:text-white/60 dark:hover:text-white/100;
+    }
+    :host ::ng-deep .basic-select.ant-select-multiple .ant-select-selection-item{
+        @apply bg-white dark:bg-white/10 border-normal dark:border-white/10;
+      }
+      ::ng-deep .ant-upload {
+        @apply w-full;
+      }
+      :host ::ng-deep .basic-select .ant-select-multiple.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        @apply dark:bg-white/10 dark:border-white/10 dark:text-white/60 dark:hover:text-white/100;
+      }
+    `],
   selector: 'app-gruas',
   templateUrl: './gruas.component.html',
   styleUrls: ['./gruas.component.css']
@@ -14,9 +30,11 @@ export class GruasComponent {
   isVisible = false;
   isLoading = true;
   showContent = false;
+  btnLoadingBusqueda = false;
   editar =false;
   isLoadingMdl = false;
   validateForm!: UntypedFormGroup;
+  busquedaForm!: UntypedFormGroup;
   data:any[]=[];
   filteredData: any[] = [];
   activos: any[] = [{ id: 1, value: 'Si' }, { id: 0, value: 'No' }];
@@ -33,6 +51,7 @@ export class GruasComponent {
     private catalogosService:CatalogosService,
     private gruaService:GruaService,
     private msg: NzMessageService,
+    private reportesService:ReportesService
   ) {
 
     
@@ -72,6 +91,12 @@ export class GruasComponent {
 
   ngOnInit() {
 
+    this.busquedaForm = this.fb.group({
+      proveedor: [null, []],
+      tipoGrua: [null, []],
+      placas: [null, []],
+    });
+
 
     this.validateForm = this.fb.group({
       proveedor: [null, [Validators.required]],
@@ -87,51 +112,71 @@ export class GruasComponent {
 
 
   loadData() {
-    this.gruaService.Get()
+    forkJoin([
+      this.gruaService.Get(),
+      this.proveedoresService.GetProveedores()
+    ]).subscribe({
+      next: ([gruaResponse, proveedoresResponse]) => {
+        this.tiposDeGrua = gruaResponse;
+        this.proveedores = proveedoresResponse;
+
+        this.busquedaForm.patchValue({
+          proveedor: 0,
+          tipoGrua: 0
+        });
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.showContent = true;
+      },
+      error: () => {
+        this.isLoading = false;
+        // Maneja el error si es necesario
+        this.msg.error("Ocurrio un error inesperado.");
+      }
+    });
+
+
+   
+
+
+  }
+
+  buscarGruas(){
+    this.btnLoadingBusqueda = true;
+
+    let proveedor = null;
+    let tipoGrua = null;
+
+    if(this.busquedaForm.value.proveedor != 0){
+      proveedor = this.busquedaForm.value.proveedor;
+    }
+    
+    if(this.busquedaForm.value.tipoGrua != 0){
+      tipoGrua = this.busquedaForm.value.tipoGrua;
+    }
+
+    let request:any = {
+      proveedorId:proveedor,
+      tipoGruaId:tipoGrua,
+      placas:this.busquedaForm.value.placas
+    }
+
+    this.reportesService.GetGruas(request)
     .subscribe({
-      next:(response)=>{
+      next: (response) => {
         this.data = response;
         this.filteredData = response;
+        this.btnLoadingBusqueda = false;
       },
       complete:()=>{
-        //this.btnLoading = false;
+        this.btnLoadingBusqueda = false;
       },
       error:()=>{
-        //this.btnLoading = false;
+        this.btnLoadingBusqueda = false;
+        this.msg.error('Ocurrio un error inesperado.');
       }
     })
-
-    this.proveedoresService.GetProveedores()
-    .subscribe({
-      next:(response)=>{
-        this.proveedores = response;
-      },
-      complete:()=>{
-        //this.btnLoading = false;
-      },
-      error:()=>{
-        //this.btnLoading = false;
-      }
-    })
-
-
-    this.catalogosService.GetTipoGrua()
-    .subscribe({
-      next:(response)=>{
-        this.tiposDeGrua = response;
-      },
-      complete:()=>{
-        //this.btnLoading = false;
-      },
-      error:()=>{
-        //this.btnLoading = false;
-      }
-    })
-    // Simulate an asynchronous data loading operation
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showContent = true;
-    }, 500);
   }
 
   guardar() {

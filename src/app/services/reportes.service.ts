@@ -23,4 +23,12 @@ export class ReportesService {
   GetServicios(request:any):Observable<any>{
     return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServicios`,request);
   }
+
+  GetProveedores(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetProveedores`,request);
+  }
+
+  GetGruas(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetGruas`,request);
+  }
 }

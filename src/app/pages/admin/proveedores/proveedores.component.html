@@ -86,7 +86,50 @@
          <!-- end: New Contact -->
       </div>
 
-    <div nz-col nzXs="24" class="mb-[25px]">
+      <div nz-col nzXs="6" >
+        <ng-container *ngIf="showContent; else loadingSkeleton">
+          <div
+            class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative mb-[25px]">
+            <div
+              class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Busqueda</h4>
+            </div>
+            <div class="p-[25px]">
+              <form  [formGroup]="busquedaForm" nz-form>
+                  <nz-form-item class="mb-[25px]">
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                      nzFor="textarea1">Estados
+                    </nz-form-label>
+                    <nz-form-control nzXs="18">
+                      <nz-select class="basic-select" name="basicSelect" formControlName="estado">
+                        <nz-option nzLabel="Todos" [nzValue]="0"></nz-option>
+                        <nz-option *ngFor="let option of estados" [nzLabel]="option.descripcion" [nzValue]="option.id">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                      nzFor="textarea2">Razón social<br/>o folio
+                    </nz-form-label>
+                    <nz-form-control nzXs="18">
+                      <input formControlName="razonSocial"  style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input >
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                      <button [nzLoading]="btnLoadingBusqueda" class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="buscarProveedores()" nz-button >
+                        <i class="text-[12px]" nz-icon nzType="search"></i>
+                        <span class="m-0">Buscar</span>
+                      </button>
+                    
+                  </nz-form-item>
+                </form>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    <div nz-col nzXs="18" class="mb-[25px]">
         <ng-container *ngIf="showContent; else loadingSkeleton">
           <div
             class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
@@ -94,26 +137,47 @@
               class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
               <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Proveedores</h4>
             </div>
-            <div class="p-[25px]">
+            <div class="p-[25px]" style="padding-top: 0px !important;">
               <div>
-                <div class="p-[25px]">
+                <div class="p-[25px]" style="padding-top: 0px !important;">
+                  <div class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+                    <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+                    </div>
+                    <div class="ssm:min-w-[380px]">
+                      <table>
+                        <tr>
+                          <td>
+                            <nz-input-group class="h-10 inline-flex items-center text-body dark:text-white/60 bg-white dark:bg-white/10 border-normal border-1 dark:border-white/10 rounded-[6px] px-[20px]">
+                              <i class="text-light dark:text-white/[.87] text-[18px]" nz-icon nzType="search"></i>
+                              <input
+                                class="bg-transparent border-none text-[15px] shadow-none text-dark dark:text-white/[.87] flex items-center"
+                                type="text"
+                                nz-input
+                                placeholder="Buscar"
+                                [(ngModel)]="searchValue"
+                                (ngModelChange)="filterItems()"
+                              />
+                            </nz-input-group>
+                          </td>
+                          <td>
+                            <button nz-button (click)="exportToExcel()">Exportar a Excel</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
                         <div class="w-full overflow-x-auto">
                             <nz-table #basicTable 
                             nzShowSizeChanger
-                            [nzData]="data"
+                            [nzData]="filteredData"
                             >
                               <thead>
                                 <tr>
                                   
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">No.</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Razon social</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Direccion</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Telefono</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Telefono 2</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Rfc</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Banco</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Cuenta</th>
-                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">Activo</th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden [&:first-child]:rounded-s-[10px] [&:last-child]:rounded-e-[10px] capitalize" *ngFor="let column of listOfColumn" [nzSortFn]="column.compare">
+                                    {{ column.title }}
+                                  </th>
                                   <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize"></th>
                                 </tr>
                               </thead>
@@ -121,13 +185,14 @@
                               <tr class="group" *ngFor="let item of basicTable.data">
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.noProveedor }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.razonSocial }}</td> 
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.direccion }}</td> 
-  
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono_1 }}</td> 
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono_2 }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.rfc }}</td> 
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.banco }}</td>
+  
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.direccion }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono_1 }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.banco }}</td> 
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.cuenta }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.comision }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.estado }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
                                   <nz-checkbox-wrapper class="flex flex-col w-full capitalize basic-checkbox text-theme-gray dark:text-white/60 gap-[5px] mb-[15px]" (nzOnChange)="log($event, item.id)">
                                     <label class=" m-0 text-dark dark:text-white/[.87]" nz-checkbox nzValue="1" [ngModel]="item.activo"></label>

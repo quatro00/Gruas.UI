@@ -26,4 +26,8 @@ export class CatalogosService {
   GetEstatusPago():Observable<any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetEstatusPago`);
   }
+
+  GetEstados():Observable<any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/${this.service}/GetEstados`);
+  }
 }
