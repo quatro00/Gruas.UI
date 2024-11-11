@@ -19,4 +19,8 @@ export class ReportesService {
   GetPagos(request:any):Observable<any>{
     return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetPagos`,request);
   }
+
+  GetServicios(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServicios`,request);
+  }
 }

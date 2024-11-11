@@ -8,6 +8,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { CatalogosService } from 'src/app/services/catalogos.service';
 import { ExcelService } from 'src/app/services/excel.service';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { forkJoin } from 'rxjs';
+import { ProveedoresService } from 'src/app/services/proveedores.service';
+import { ReportesService } from 'src/app/services/reportes.service';
 
 @Component({
   styles:  [`
@@ -33,11 +36,14 @@ export class ServiciosComponent {
   showContent = false;
   validateForm!: UntypedFormGroup;
   estatus:any[]=[];
+  proveedores:any[]=[];
   data:any[]=[];
   filteredData:any[]=[];  
   searchValue = '';
   btnLoadingBusqueda = false;
   
+  fechaInicio:any=null;
+  fechaTermino:any=null;
 
   listOfColumn = [
     {
@@ -72,7 +78,7 @@ export class ServiciosComponent {
     },
     {
       title: 'Costo',
-      key:'costo',
+      key:'total',
       compare: (a: any, b: any) => a.costo.localeCompare(b.costo)
     },
     {
@@ -87,12 +93,12 @@ export class ServiciosComponent {
     },
     {
       title: 'Grua',
-      key:'gruaPlaca',
+      key:'grua',
       compare: (a: any, b: any) => a.gruaPlaca.localeCompare(b.gruaPlaca)
     },
     {
       title: 'Tipo',
-      key:'gruaTipo',
+      key:'tipo',
       compare: (a: any, b: any) => a.gruaTipo.localeCompare(b.gruaTipo)
     }
   ];
@@ -104,6 +110,8 @@ export class ServiciosComponent {
     private datePipe: DatePipe,
     private fb: UntypedFormBuilder,
     private servicioService:ServicioService,
+    private proveedoresService:ProveedoresService,
+    private reportesService:ReportesService,
     private catalogosService:CatalogosService,
     private excelService:ExcelService,
     private http: HttpClient) {}
@@ -111,21 +119,11 @@ export class ServiciosComponent {
   ngOnInit() {
     // Simulate loading time
     this.validateForm = this.fb.group({
-      estatus: [null, [Validators.required]],
+      proveedorId: [null, []],
+      estatusPagoId: [null, []],
+      fechaInicio: [null, []],
+      fechaTermino: [null, []],
     });
-
-    this.catalogosService.GetEstatusServicio()
-    .subscribe({
-      next:(response)=>{
-        this.estatus = response;
-      },
-      complete:()=>{
-        //this.btnLoading = false;
-      },
-      error:()=>{
-        //this.btnLoading = false;
-      }
-    })
 
     this.loadData();
   }
@@ -138,7 +136,7 @@ export class ServiciosComponent {
         next: (response) => {
           this.data = response;
         this.filteredData = response;
-
+          console.log(response);
           this.btnLoadingBusqueda=false;
         },
         complete:()=>{
@@ -173,27 +171,69 @@ export class ServiciosComponent {
 
   loadData() {
 
-    /*
-    this.servicioService.GetAllServicios()
-    .subscribe({
-      next:(response)=>{
-        this.data = response;
-        this.filteredData = response;
-        //this.razonesSociales = response.razonesSociales;
+    forkJoin([
+      this.catalogosService.GetEstatusServicio(),
+      this.proveedoresService.GetProveedores()
+    ]).subscribe({
+      next: ([estatusResponse, proveedoresResponse]) => {
+        this.estatus = estatusResponse;
+        this.proveedores = proveedoresResponse;
+
+        this.validateForm.patchValue({
+          proveedorId: 0,
+          estatusPagoId: 0
+        });
       },
-      complete:()=>{
-        //this.btnLoading = false;
+      complete: () => {
+        this.isLoading = false;
+        this.showContent = true;
       },
-      error:()=>{
-        //this.btnLoading = false;
+      error: () => {
+        this.isLoading = false;
+        // Maneja el error si es necesario
+        this.msg.error("Ocurrio un error inesperado.");
       }
-    })
-    */
-    // Simulate an asynchronous data loading operation
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showContent = true;
-    }, 500);
+    });
+  }
+
+  buscarServicios() {
+    this.btnLoadingBusqueda = true;
+
+    let proveedorId = null;
+    let estatusId = null;
+
+    if(this.validateForm.value.proveedorId != 0){
+      proveedorId = this.validateForm.value.proveedorId;
+    }
+
+    if(this.validateForm.value.estatusPagoId != 0){
+      estatusId = this.validateForm.value.estatusPagoId;
+    }
+
+    let request:any = {
+      proveedorId:proveedorId,
+      estatusServicioId:estatusId,
+      fechaInicio:this.fechaInicio,
+      fechaTermino:this.fechaTermino
+    }
+
+    this.reportesService.GetServicios(request)
+      .subscribe({
+        next: (response) => {
+          this.data = response;
+          this.filteredData = response;
+          this.btnLoadingBusqueda = false;
+          console.log(response);
+        },
+        complete:()=>{
+          this.btnLoadingBusqueda = false;
+        },
+        error:()=>{
+          this.btnLoadingBusqueda = false;
+          this.msg.error('Ocurrio un error al registrar el pago.');
+        }
+      })
+    
   }
 
   private applyFilters(): any[] {

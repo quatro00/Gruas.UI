@@ -17,7 +17,67 @@
          <!-- end: New Contact -->
       </div>
 
-    <div nz-col nzXs="24" class="mb-[25px]">
+      <div nz-col nzXs="6" >
+        <ng-container *ngIf="showContent; else loadingSkeleton">
+          <div
+            class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative mb-[25px]">
+            <div
+              class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Busqueda</h4>
+            </div>
+            <div class="p-[25px]">
+              <form  [formGroup]="validateForm" nz-form>
+                  <nz-form-item class="mb-[25px]">
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                      nzFor="textarea1">Proveedor
+                    </nz-form-label>
+                    <nz-form-control nzXs="18">
+                      <nz-select class="basic-select" name="basicSelect" formControlName="proveedorId">
+                        <nz-option nzLabel="Todos" [nzValue]="0"></nz-option>
+                        <nz-option *ngFor="let option of proveedores" [nzLabel]="option.noProveedor + ' - ' + option.razonSocial" [nzValue]="option.id">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item class="mb-[25px]">
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                      nzFor="textarea1">Estatus
+                    </nz-form-label>
+                    <nz-form-control nzXs="18">
+                      <nz-select class="basic-select" name="basicSelect" formControlName="estatusPagoId">
+                        <nz-option nzLabel="Todos" [nzValue]="0"></nz-option>
+                        <nz-option *ngFor="let option of estatus" [nzLabel]="option.descripcion" [nzValue]="option.id"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="24"
+                      nzFor="textarea2">Fechas de solicitud
+                    </nz-form-label>
+                    <nz-form-control nzXs="11">
+                      <input formControlName="fechaInicio"  style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="date" nz-input >
+                    </nz-form-control>
+                    <nz-form-control nzXs="2">
+                    </nz-form-control>
+                    <nz-form-control nzXs="11">
+                      <input formControlName="fechaTermino"  style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="date" nz-input >
+                    </nz-form-control>
+  
+                  </nz-form-item>
+                  <nz-form-item>
+                      <button [nzLoading]="btnLoadingBusqueda" class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="buscarServicios()" nz-button >
+                        <i class="text-[12px]" nz-icon nzType="search"></i>
+                        <span class="m-0">Buscar</span>
+                      </button>
+                    
+                  </nz-form-item>
+                </form>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    <div nz-col nzXs="18" class="mb-[25px]">
         <ng-container *ngIf="showContent; else loadingSkeleton">
           <div
             class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
@@ -27,25 +87,7 @@
             </div>
             <div class="p-[25px]">
               <div>
-                <form class="max-w-full" [formGroup]="validateForm">
-                  <nz-form-item>
-                    <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3" nzFor="text2">Estatus:</nz-form-label>
-                    <nz-form-control nzXs="6" nzErrorTip="Campo requerido." >
-                      <nz-select class="basic-select" name="basicSelect" formControlName="estatus">
-                          <nz-option *ngFor="let option of estatus" [nzLabel]="option.descripcion" [nzValue]="option.id">
-                          </nz-option>
-                        </nz-select>
-                  </nz-form-control>
-                    <nz-form-control nzXs="1">
-                    </nz-form-control>
-                    <nz-form-control nzXs="1">
-                    <button [nzLoading]="btnLoadingBusqueda" (click)="buscaServicios()" class="bg-primary hover:bg-primary-hbr inline-flex items-center outline-none shadow-none w-fit duration-300 text-white capitalize px-[20px] text-[15px] border-primary hover:border-primary-hbr rounded-[5px] gap-[8px] h-[46px]" nz-button nzType="primary" >
-                          <span>Buscar</span>
-                          <span nz-icon nzType="search" nzTheme="outline"></span>
-                        </button>
-                    </nz-form-control>
-                  </nz-form-item>
-                </form>
+                
 
                 <div class="p-[25px]">
 
@@ -98,7 +140,7 @@
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.estado }}</td> 
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.origen }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.destino }}</td> 
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.costo }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.total | currency: 'USD':'symbol':'1.2-2' }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
                                 
                                   <span
@@ -108,58 +150,16 @@
                                 </span>
                                 </td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.proveedor }}</td>
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.gruaPlaca }}</td>
-                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.gruaTipo }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.grua }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.tipo }}</td>
                                  <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
-                                  <div class="flex items-center gap-[10px]">
-                                    <a class="text-light-extra text-18" nz-dropdown nzPlacement="bottomRight" nzTrigger="click"
-                                        [nzDropdownMenu]="projectListSetting2">
-                                        <span nz-icon nzType="more" nzTheme="outline"></span>
-                                      </a>
-                                      <nz-dropdown-menu #projectListSetting2="nzDropdownMenu">
-                                        <ul
-                                          class="block bg-white dark:bg-[#1b1e2b] shadow-regular dark:shadow-[0_5px_30px_rgba(1,4,19,.60)] rounded-4 capitalize"
-                                          nz-menu nzSelectable>
-          
-                                       
-                                        <li  (click)="verServicio(item.id)"
-                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
-                                        nz-menu-item>
-                                          <i nz-icon nzType="search" theme="outline"></i>
-                                          <span class="m-l-10">Visualizar</span>
-                                        </li>
-    
-                                        <li  (click)="verServicio(item.id)"
-                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
-                                        nz-menu-item>
-                                          <i nz-icon nzType="close-circle" theme="outline"></i>
-                                          <span class="m-l-10">Cancelar</span>
-                                        </li>
 
-                                        <li  *ngIf="item.estatusId === 3" (click)="OrdenCompraPdf(item.id)"
-                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
-                                        nz-menu-item>
-                                          <i nz-icon nzType="file-pdf" theme="outline"></i>
-                                          <span class="m-l-10">Descargar PDF</span>
-                                        </li>
-  
-                                        <li *ngIf="item.estatusId === 3"   (click)="OrdenCompraExcel(item.id)"
-                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
-                                        nz-menu-item>
-                                          <i nz-icon nzType="file-excel" theme="outline"></i>
-                                          <span class="m-l-10">Descargar Excel</span>
-                                        </li>
-  
-                                        <li  *ngIf="item.estatusId === 3" (click)="OrdenCompraTxt(item.id)"
-                                        class="flex items-center text-theme-gray dark:text-white/60 hover:bg-primary/10 hover:text-primary dark:hover:bg-white/10 px-3 py-1.5 text-sm dark:hover:text-white/[.87] gap-[6px]"
-                                        nz-menu-item>
-                                          <i nz-icon nzType="file-text" theme="outline"></i>
-                                          <span class="m-l-10">Descargar TXT</span>
-                                        </li>
-    
-                                        </ul>
-                                      </nz-dropdown-menu>
-                                  </div>
+                                  <button  (click)="verServicio(item.id)" nz-tooltip nzTooltipTitle="Ver servicio" nz-button
+                          class="bg-primary/10 hover:bg-primary-hbr border-none text-primary hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] [&>span]:inline-flex">
+                          <span class="text-[14px]" nz-icon nzType="search" nzTheme="outline"></span>
+                        </button>
+
+                                  
                                  </td>
                                 </tr>
                               </tbody>
