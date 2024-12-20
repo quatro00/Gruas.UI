@@ -1,0 +1,288 @@
+<nz-modal [nzMaskClosable]="false" [nzWidth]="'50%'" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>Nuevo usuario</ng-template>
+
+  <ng-template #modalContent>
+    <div class="p-[25px]">
+      <div style="width: 100%;">
+
+      </div>
+    </div>
+
+    <form class="max-w-full" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3" nzFor="text2">Proveedor</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <nz-select
+            class="w-full capitalize [&>nz-select-top-control]:border-regular dark:[&>nz-select-top-control]:border-white/10 [&>nz-select-top-control]:bg-white [&>nz-select-top-control]:dark:bg-white/10 [&>nz-select-top-control]:shadow-none [&>nz-select-top-control]:text-dark [&>nz-select-top-control]:dark:text-white/60 [&>nz-select-top-control]:h-[50px] [&>nz-select-top-control]:flex [&>nz-select-top-control]:items-center [&>nz-select-top-control]:rounded-[6px] [&>nz-select-top-control]:px-[20px] [&>.ant-select-arrow]:text-theme-gray dark:[&>.ant-select-arrow]:text-white/60"
+            name="proveedor" formControlName="proveedor">
+            <nz-option *ngFor="let option of proveedores" [nzValue]="option.id"
+              [nzLabel]="option.razonSocial"></nz-option>
+          </nz-select>
+        </nz-form-control>
+
+        <nz-form-control nzXs="1">
+        </nz-form-control>
+        
+
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="4"
+          nzFor="text2">Nombre</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <input formControlName="nombre"
+            class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+            nz-input name="nombre" type="text" id="nombre">
+        </nz-form-control>
+       
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
+          nzFor="text2">Apellidos</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <input formControlName="apellidos"
+            class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+            nz-input name="apellidos" type="text" id="apellidos">
+        </nz-form-control>
+        <nz-form-control nzXs="1">
+        </nz-form-control>
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="4"
+          nzFor="text2">Teléfono</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <input formControlName="telefono"
+            class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+            nz-input name="telefono" type="text" id="telefono">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
+          nzFor="text2">Correo electrónico</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <input formControlName="correoElectronico"
+            class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+            nz-input name="correoElectronico" type="text" id="correoElectronico">
+        </nz-form-control>
+       
+      
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="3"
+        nzFor="text2">Nombre de usuario</nz-form-label>
+      <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+        <input formControlName="nombreUsuario"
+          class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+          nz-input name="nombreUsuario" type="text" id="nombreUsuario">
+      </nz-form-control>
+        <nz-form-control nzXs="1">
+        </nz-form-control>
+
+        <nz-form-label class="flex items-center font-medium dark:text-white/60" nzXs="4"
+          nzFor="text2">Password</nz-form-label>
+        <nz-form-control nzXs="8" nzErrorTip="Campo requerido.">
+          <input formControlName="password"
+            class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+            nz-input name="password" type="text" id="password">
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+
+
+
+
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button
+      class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]"
+      nz-button nzType="primary" (click)="guardar()" [nzLoading]="isLoadingMdl">Guardar</button>
+  </ng-template>
+</nz-modal>
+
+
+
+<div nz-row nzGutter="25">
+  <!-- skeleton -->
+  <ng-template #loadingSkeleton>
+    <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+      [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+  </ng-template>
+  <!-- skeleton -->
+
+  <div nz-col nzXs="24" class="mb-[25px]">
+    <!-- New Contact -->
+    <div class="flex items-center justify-center md:justify-end">
+      <button
+        class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]"
+        (click)="showNew()" nz-button>
+        <i class="text-[12px]" nz-icon nzType="plus"></i>
+        <span class="m-0">Registrar usuario</span>
+      </button>
+    </div>
+    <!-- end: New Contact -->
+  </div>
+
+  <div nz-col nzXs="6" >
+    <ng-container *ngIf="showContent; else loadingSkeleton">
+      <div
+        class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative mb-[25px]">
+        <div
+          class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+          <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Busqueda</h4>
+        </div>
+        <div class="p-[25px]">
+          <form  [formGroup]="busquedaForm" nz-form>
+              <nz-form-item class="mb-[25px]">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                  nzFor="textarea1">Tipo
+                </nz-form-label>
+                <nz-form-control nzXs="18">
+                  <nz-select class="basic-select" name="basicSelect" formControlName="tipo">
+                    <nz-option nzLabel="Todos" [nzValue]="0"></nz-option>
+                    <nz-option *ngFor="let option of tipo" [nzLabel]="option.value" [nzValue]="option.id">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item class="mb-[25px]">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                  nzFor="textarea1">Teléfono:
+                </nz-form-label>
+                <nz-form-control nzXs="18">
+                    <input formControlName="telefono" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item class="mb-[25px]">
+                <nz-form-label class="flex items-center font-medium dark:text-white/60 mb-[10px]" nzXs="6"
+                  nzFor="textarea1">Correo <br>electrónico:
+                </nz-form-label>
+                <nz-form-control nzXs="18">
+                    <input formControlName="correoElectronico" style="color:white" class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[46px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60" type="text" nz-input #nombre>
+                </nz-form-control>
+              </nz-form-item>
+
+            
+              <nz-form-item>
+                  <button [nzLoading]="btnLoadingBusqueda" class="flex items-center px-[14px] text-sm text-white rounded-md font-semibold bg-primary border-primary h-10 gap-[6px]" (click)="buscarGruas()" nz-button >
+                    <i class="text-[12px]" nz-icon nzType="search"></i>
+                    <span class="m-0">Buscar</span>
+                  </button>
+                
+              </nz-form-item>
+            </form>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div nz-col nzXs="18" class="mb-[25px]">
+    <ng-container *ngIf="showContent; else loadingSkeleton">
+      <div
+        class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+        <div
+          class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+          <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Usuarios</h4>
+        </div>
+        <div class="p-[25px]"  style="padding-top: 0px !important;">
+          <div
+            class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+            <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+            </div>
+            <div class="ssm:min-w-[280px]">
+              <nz-input-group
+                class="h-10 inline-flex items-center text-body dark:text-white/60 bg-white dark:bg-white/10 border-normal border-1 dark:border-white/10 rounded-[6px] px-[20px]">
+                <i class="text-light dark:text-white/[.87] text-[18px]" nz-icon nzType="search"></i>
+                <input
+                  class="bg-transparent border-none text-[15px] shadow-none text-dark dark:text-white/[.87] flex items-center"
+                  type="text" nz-input placeholder="Buscar" [(ngModel)]="searchValue" (ngModelChange)="filterItems()" />
+              </nz-input-group>
+            </div>
+          </div>
+
+          <div class="w-full overflow-x-auto">
+            <input #fileInput accept=".pdf" type="file" (change)="onFileSelect($event)" style="display: none;">
+
+            <nz-table #basicTable nzShowSizeChanger [nzData]="filteredData">
+              <thead>
+                <tr>
+
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    User name</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Nombre</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Apellidos</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Correo electrónico</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Telefono</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Proveedor</th>
+                    <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Tipo</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                    Activo</th>
+                  <th
+                    class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize">
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="group" *ngFor="let item of basicTable.data">
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.userName }}</td>
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.nombre }}</td>
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.apellidos }}</td>
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.correoElectronico }}</td>
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.telefono }}</td>
+                    <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.razonSocial   }}</td>
+                    <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    {{ item.roles   }}</td>
+
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+
+                    <div *ngIf="item.activo === 1">Activo</div>
+                    <div *ngIf="item.activo === 0">Inactivo</div>
+                  </td>
+                  <td
+                    class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                    <button nz-button (click)="showEdit(item)"
+                      class="bg-primary/10 hover:bg-primary-hbr border-none text-primary hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] [&>span]:inline-flex">
+                      <span class="text-[14px]" nz-icon nzType="edit" nzTheme="outline"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

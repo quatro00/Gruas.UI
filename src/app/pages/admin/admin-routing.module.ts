@@ -10,6 +10,7 @@ import { CrearServicioComponent } from './crear-servicio/crear-servicio.componen
 import { ServiceRequestComponent } from './service-request/service-request.component';
 import { GruasComponent } from './gruas/gruas.component';
 import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,14 @@ const routes: Routes = [
     component: ProveedoresComponent,
     data: {
         title: 'Proveedores',
+    },
+    //canActivate: [authAdminGuard]
+  },
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
+    data: {
+        title: 'Usuarios',
     },
     //canActivate: [authAdminGuard]
   },
