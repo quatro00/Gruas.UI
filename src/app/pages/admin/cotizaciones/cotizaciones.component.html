@@ -1,0 +1,171 @@
+<nz-modal [nzMaskClosable]="false" [nzWidth]="'80%'" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>Cotizaciones</ng-template>
+
+  <ng-template #modalContent>
+    <div class="p-[25px]">
+      <div style="width: 100%;">
+        <div class="p-[25px]" style="padding-top: 0px !important;">
+
+            <div class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+              <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+              </div>
+            
+            </div>
+
+                  <div class="w-full overflow-x-auto">
+                      <nz-table #basicTable 
+                      nzShowSizeChanger
+                      [nzData]="cotizaciones"
+                      >
+                        <thead>
+                          <tr>
+                          <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden [&:first-child]:rounded-s-[10px] [&:last-child]:rounded-e-[10px] capitalize" *ngFor="let column of listOfColumnCotizaciones" [nzSortFn]="column.compare">
+                            {{ column.title }}
+                          </th>
+                            <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="group" *ngFor="let item of basicTable.data">
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.razonSocial }}</td>
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.proveedorTelefono1 }}</td> 
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.proveedorTelefono2 }}</td> 
+
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.proveedorCorreo }}</td> 
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.grua }}</td>
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.gruaTipo }}</td> 
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.gruaPlacas }}</td> 
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.costoCotizado | currency: 'USD':'symbol':'1.2-2' }}</td>
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ transform(item.tiempoCotizado) }}</td>
+                           
+                           <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+
+                            <button  (click)="seleccionarCotizacion(item.id)" nz-tooltip nzTooltipTitle="Seleccionar cotización" nz-button
+                    class="bg-info/10 hover:bg-info-hbr border-none text-info hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] [&>span]:inline-flex">
+                    Seleccionar
+                  </button>
+
+                            
+                           </td>
+                          </tr>
+                        </tbody>
+                      </nz-table>
+                    </div>
+                </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button
+      class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]"
+      nz-button nzType="primary" (click)="guardar()" [nzLoading]="isLoadingMdl">Guardar</button>
+  </ng-template>
+</nz-modal>
+
+<div nz-row nzGutter="25">
+    <!-- skeleton -->
+    <ng-template #loadingSkeleton>
+      <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+        [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    </ng-template>
+    <!-- skeleton -->
+
+    <div nz-col nzXs="24" class="mb-[25px]">
+        <ng-container *ngIf="showContent; else loadingSkeleton">
+          <div
+            class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+            <div
+              class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+              <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Servicios</h4>
+            </div>
+            <div class="p-[25px]" style="padding-top: 0px !important;">
+              <div>
+                
+
+                <div class="p-[25px]" style="padding-top: 0px !important;">
+
+                  <div class="flex items-center justify-center w-full mt-5 mb-[25px] max-md:flex-col max-md:justify-center gap-[15px]">
+                    <div class="inline-flex items-center flex-wrap w-full gap-[20px] max-md:justify-center">
+                    </div>
+                    <div class="ssm:min-w-[380px]">
+                      <table>
+                        <tr>
+                          <td>
+                            <nz-input-group class="h-10 inline-flex items-center text-body dark:text-white/60 bg-white dark:bg-white/10 border-normal border-1 dark:border-white/10 rounded-[6px] px-[20px]">
+                              <i class="text-light dark:text-white/[.87] text-[18px]" nz-icon nzType="search"></i>
+                              <input
+                                class="bg-transparent border-none text-[15px] shadow-none text-dark dark:text-white/[.87] flex items-center"
+                                type="text"
+                                nz-input
+                                placeholder="Buscar"
+                                [(ngModel)]="searchValue"
+                                (ngModelChange)="filterItems()"
+                              />
+                            </nz-input-group>
+                          </td>
+                          <td>
+                            <button nz-button (click)="exportToExcel()">Exportar a Excel</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                        <div class="w-full overflow-x-auto">
+                            <nz-table #basicTable 
+                            nzShowSizeChanger
+                            [nzData]="filteredData"
+                            >
+                              <thead>
+                                <tr>
+                                <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden [&:first-child]:rounded-s-[10px] [&:last-child]:rounded-e-[10px] capitalize" *ngFor="let column of listOfColumn" [nzSortFn]="column.compare">
+                                  {{ column.title }}
+                                </th>
+                                  <th class="bg-regularBG dark:bg-[#323440] px-[20px] py-[16px] text-start text-dark dark:text-white/[.87] text-[15px] font-medium border-none before:hidden capitalize"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              <tr class="group" *ngFor="let item of basicTable.data">
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.folio }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.cliente }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.telefono }}</td> 
+  
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.estado }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.origen }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.destino }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.totalSugerido | currency: 'USD':'symbol':'1.2-2' }}</td>
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.fecha | date: 'dd/MM/yyyy HH:mm' }}</td> 
+                                 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+                                
+                                  <span
+                                  class="inline-flex items-center justify-center bg-active/10 text-active min-h-[24px] px-3 text-xs font-medium rounded-[15px] capitalize"
+                                >
+                                {{ item.estatus }}
+                                </span>
+                                </td>
+                                <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">{{ item.numCotizaciones }}</td> 
+                                 <td class="ltr:pr-[20px] rtl:pl-[20px] text-dark dark:text-white/[.87] text-[15px] py-4 before:hidden border-none group-hover:bg-transparent">
+
+                                  <button  (click)="verServicio(item.id)" nz-tooltip nzTooltipTitle="Ver cotizaciones" nz-button
+                          class="bg-primary/10 hover:bg-primary-hbr border-none text-primary hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px] [&>span]:inline-flex">
+                          <span class="text-[14px]" nz-icon nzType="search" nzTheme="outline"></span>
+                        </button>
+
+                                  
+                                 </td>
+                                </tr>
+                              </tbody>
+                            </nz-table>
+                          </div>
+                      </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    
+</div>

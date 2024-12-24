@@ -38,8 +38,20 @@ export class ServicioService {
 
   }
 
+  GetCotizaciones(id:string):Observable<any>{
+    let params = new HttpParams();
+    params = params.append('servicioId', id);
+
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetCotizaciones`,{params});
+
+  }
+
   AsignarGrua(request:any):Observable<any>{
     return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/AsignarGrua`,request);
+  }
+
+  AsignarCotizacion(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/AsignarCotizacion`,request);
   }
 
   CancelarServicio(request:any):Observable<any>{
